@@ -1,0 +1,9 @@
+1.	To join department id from another table to employees table
+INPUT:
+SELECT employees.employeeid,
+    	      employees.firstname,
+    	      employees.lastname,
+    	      employeedepartment.departmentid
+FROM employees
+LEFT JOIN employeedepartment
+ON employees.employeeid = employeedepartment.employeeid;
