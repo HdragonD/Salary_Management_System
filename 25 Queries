@@ -1,1 +1,146 @@
+--To join department id from another table to employees table
+SELECT employees.employeeid,
+       employees.firstname,
+       employees.lastname,
+       employeedepartment.departmentid
+FROM employees
+LEFT JOIN employeedepartment
+ON employees.employeeid = employeedepartment.employeeid;
+
+--To see department name of employees 
+SELECT employeedepartment.employeeid, departments.departmentname
+FROM employeedepartment, departments
+WHERE employeedepartment.departmentid = departments.departmentid
+LIMIT 5;
+
+--Total Salary expense
+SELECT SUM(salaryamount) 
+AS total_salary_expense 
+FROM salaries;
+
+--Fetching 5 employees whose salary is greater than 100000
+SELECT * 
+FROM salaries 
+WHERE salaryamount > 100000
+LIMIT 5;
+
+--Highest salary out of all employees
+SELECT MAX(salaryamount) 
+AS highest_salary 
+FROM salaries;
+
+--Top 10 highest paid employees
+SELECT * 
+FROM salaries 
+ORDER BY salaryamount DESC
+LIMIT 10;
+
+--Employees who joined after ‘2023-10-01’
+SELECT * 
+FROM employees 
+WHERE hiredate < '2023-10-01';
+
+--Getting the one employee who earns highest avg salary
+SELECT employeeid, AVG(salaryamount) AS average_salary
+FROM salaries
+GROUP BY employeeid
+ORDER BY average_salary DESC
+LIMIT 1;
+
+--Fetching 1 employee with the lowest bonus(salary)
+SELECT employeeid, MIN(salaryamount) AS lowest_bonus 
+FROM salaries 
+GROUP BY employeeid 
+ORDER BY employeeid 
+LIMIT 1;
+
+--Total salary expense between ‘2021-01-01’ and ‘2024-01-01’
+SELECT SUM(salaryamount) AS salary_expense 
+FROM salaries 
+WHERE salarydate BETWEEN '2023-01-01' AND '2024-01-01';
+
+--Top 5 highest earning employees and the date on which their salary is paid
+SELECT * FROM salaries 
+ORDER BY salaryamount DESC
+LIMIT 5;
+
+--Average salary paid
+SELECT AVG(salaryamount) AS average_salary 
+FROM salaries;
+
+--Fetching employee name and their respective salary in ascending salary
+SELECT e.firstname, s.salaryamount
+FROM employees AS e
+JOIN salaries AS s ON e.employeeid = s.employeeid
+LIMIT 10;
+
+--Fetching the first name of employees and the maximum salary they can earn
+SELECT e.firstname,e.employeeid,s.salaryamount
+FROM employees AS e , salaries AS s
+WHERE salaryamount = (SELECT MAX(salaryamount) FROM salaries AS s)
+LIMIT 10;
+
+--Joining employeedepartment table with employee table 
+SELECT * 
+FROM employees
+LEFT JOIN employeedepartment
+ON employeedepartment.employeeid = employees.employeeid
+LIMIT 10;
+
+--Employees whose salary is between 75000 and 100000
+SELECT e.firstname,s.salaryamount
+FROM employees AS e, salaries AS s
+WHERE s.salaryamount BETWEEN '75000' AND '100000'
+AND e.employeeid = s.employeeid;
+
+--Employees whose name start with ‘J’
+SELECT * 
+FROM employees
+WHERE firstname LIKE'J%';
+
+--Find the employees with the most recent hire date
+SELECT *
+FROM employees
+ORDER BY hiredate DESC
+LIMIT 1;
+
+--Find if any two or more employees are hired on the same date
+SELECT hiredate, employeeid AS employee_ids
+FROM employees
+GROUP BY employees.employeeid
+HAVING COUNT(*) > 1;
+
+--Find employees that were hired before today(06-10-2023)
+SELECT * FROM employees
+WHERE CURRENT_DATE>hiredate
+
+--Highest earner of the company
+SELECT e.employeeid, e.firstname, e.lastname, salaries.salaryamount
+FROM employees AS e, salaries
+WHERE e.employeeid = salaries.employeeid
+ORDER BY salaryamount DESC 
+LIMIT 1;
+
+--List employees in alphabetical order by last name
+SELECT * 
+FROM employees 
+ORDER BY lastname
+LIMIT 10;
+
+--List employees who earn more than the average salary
+SELECT * 
+FROM salaries 
+WHERE salaryamount > (SELECT AVG(salaryamount) FROM salaries);
+
+--Count number of employees whose first name start with ‘J’
+SELECT COUNT(*) AS number_of_emp
+FROM employees
+WHERE firstname LIKE 'J%';
+
+--Employees that have joined in the month of July
+SELECT * 
+FROM employees
+WHERE extract(month from hiredate) = 07;
+
+
 
